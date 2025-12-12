@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - SessionCast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">></span>
+                <span class="logo-text">SessionCast</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="install.html" class="active">Installation</a></li>
+                <li><a href="guide.html">Usage Guide</a></li>
+                <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Installation</h3>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#prerequisites">Prerequisites</a></li>
+                    <li><a href="#relay-server">Relay Server</a></li>
+                    <li><a href="#web-client">Web Client</a></li>
+                    <li><a href="#agent">Agent</a></li>
+                    <li><a href="#configuration">Configuration</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <article class="docs-content">
+            <header class="docs-header">
+                <h1>Installation Guide</h1>
+                <p>SessionCast를 설치하고 구성하는 방법을 단계별로 안내합니다.</p>
+            </header>
+
+            <section id="overview" class="docs-section">
+                <h2>Overview</h2>
+                <p>SessionCast는 세 가지 주요 컴포넌트로 구성됩니다:</p>
+
+                <div class="component-cards">
+                    <div class="component-card">
+                        <div class="component-icon server-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                <line x1="6" y1="18" x2="6.01" y2="18"/>
+                            </svg>
+                        </div>
+                        <h3>Relay Server</h3>
+                        <p>Agent와 Web Client 사이의 WebSocket 통신을 중계하고 인증을 관리합니다.</p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-icon web-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h3>Web Client</h3>
+                        <p>브라우저에서 터미널 세션을 보고 상호작용할 수 있는 React 기반 웹 애플리케이션입니다.</p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-icon agent-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                <line x1="9" y1="9" x2="15" y2="9"/>
+                                <line x1="9" y1="13" x2="15" y2="13"/>
+                                <line x1="9" y1="17" x2="13" y2="17"/>
+                            </svg>
+                        </div>
+                        <h3>Agent</h3>
+                        <p>로컬 머신에서 실행되어 tmux 세션을 캡처하고 Relay Server로 스트리밍합니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="prerequisites" class="docs-section">
+                <h2>Prerequisites</h2>
+
+                <h3>Relay Server & Web Client</h3>
+                <ul class="prereq-list">
+                    <li>Java 17 이상 (Relay Server)</li>
+                    <li>Node.js 18 이상 (Web Client 빌드 시)</li>
+                    <li>Docker (선택적)</li>
+                    <li>Google Cloud Console에서 OAuth 2.0 클라이언트 ID</li>
+                </ul>
+
+                <h3>Agent</h3>
+                <ul class="prereq-list">
+                    <li>Java 17 이상</li>
+                    <li>tmux 설치됨</li>
+                    <li>Linux 또는 macOS</li>
+                </ul>
+            </section>
+
+            <section id="relay-server" class="docs-section">
+                <h2>Relay Server 설치</h2>
+
+                <h3>Option 1: Docker (권장)</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Docker</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Pull image
+docker pull ghcr.io/sessioncast/server:latest
+
+# Run with environment variables
+docker run -d \
+  --name sessioncast-server \
+  -p 8080:8080 \
+  -e GOOGLE_CLIENT_ID=your-client-id \
+  -e GOOGLE_CLIENT_SECRET=your-client-secret \
+  -e JWT_SECRET=your-jwt-secret-key-at-least-256-bits \
+  -e FRONTEND_URL=https://your-domain.com \
+  -e CORS_ORIGINS=https://your-domain.com \
+  ghcr.io/sessioncast/server:latest</code></pre>
+                </div>
+
+                <h3>Option 2: Build from Source</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Bash</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Clone repository
+git clone https://github.com/sessioncast/server.git
+cd server
+
+# Build
+./gradlew build -x test
+
+# Run
+java -jar build/libs/relay-0.0.1-SNAPSHOT.jar</code></pre>
+                </div>
+
+                <h3>Option 3: systemd Service (Linux)</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>/etc/systemd/system/sessioncast.service</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code>[Unit]
+Description=SessionCast Relay Server
+After=network.target
+
+[Service]
+Type=simple
+User=sessioncast
+WorkingDirectory=/opt/sessioncast
+ExecStart=/usr/bin/java -jar /opt/sessioncast/relay.jar
+Restart=always
+RestartSec=10
+
+Environment=GOOGLE_CLIENT_ID=your-client-id
+Environment=GOOGLE_CLIENT_SECRET=your-client-secret
+Environment=JWT_SECRET=your-jwt-secret-key
+Environment=FRONTEND_URL=https://your-domain.com
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+                </div>
+
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Service Management</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Enable and start service
+sudo systemctl daemon-reload
+sudo systemctl enable sessioncast
+sudo systemctl start sessioncast
+
+# Check status
+sudo systemctl status sessioncast</code></pre>
+                </div>
+
+                <div class="info-box">
+                    <h4>Google OAuth 설정</h4>
+                    <ol>
+                        <li><a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>에서 프로젝트 생성</li>
+                        <li>OAuth 2.0 클라이언트 ID 생성 (웹 애플리케이션 유형)</li>
+                        <li>승인된 리디렉션 URI 추가: <code>https://your-domain.com/login/oauth2/code/google</code></li>
+                        <li>Client ID와 Client Secret을 환경 변수에 설정</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="web-client" class="docs-section">
+                <h2>Web Client 설치</h2>
+
+                <p>Web Client는 Relay Server와 함께 배포하거나 별도의 정적 호스팅으로 배포할 수 있습니다.</p>
+
+                <h3>Build from Source</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Bash</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Clone repository
+git clone https://github.com/sessioncast/web.git
+cd web
+
+# Install dependencies
+npm install
+
+# Create environment file
+cat > .env << EOF
+VITE_API_URL=https://your-relay-server.com
+VITE_WS_URL=wss://your-relay-server.com/ws
+EOF
+
+# Build for production
+npm run build
+
+# Output is in 'dist' folder</code></pre>
+                </div>
+
+                <h3>Nginx Configuration</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>/etc/nginx/sites-available/sessioncast</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code>server {
+    listen 443 ssl http2;
+    server_name your-domain.com;
+
+    ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+
+    # Serve static files
+    root /var/www/sessioncast;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Proxy API requests to relay server
+    location /api/ {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # WebSocket proxy
+    location /ws {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="agent" class="docs-section">
+                <h2>Agent 설치</h2>
+
+                <h3>Build from Source</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Bash</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Clone repository
+git clone https://github.com/sessioncast/agent.git
+cd agent
+
+# Build
+./gradlew build -x test
+
+# Copy jar to desired location
+cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                </div>
+
+                <h3>Agent Token 생성</h3>
+                <p>Agent가 Relay Server에 연결하려면 토큰이 필요합니다. Relay Server의 <code>agent-tokens.json</code>에 토큰을 추가하세요:</p>
+
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>agent-tokens.json</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code>{
+  "tokens": {
+    "agt_your_secure_token_here": {
+      "owner": "your.email@gmail.com",
+      "label": "My Workstation",
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+  }
+}</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4>보안 주의</h4>
+                    <p>Agent Token은 민감한 정보입니다. 안전한 채널을 통해서만 공유하고, 절대 공개 저장소에 커밋하지 마세요.</p>
+                </div>
+
+                <h3>Agent 설정</h3>
+                <p>홈 디렉토리에 <code>.tmux-remote.yml</code> 파일을 생성하세요:</p>
+
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>~/.tmux-remote.yml</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Machine identifier (unique per machine)
+machineId: my-workstation
+
+# Relay server WebSocket URL
+relay: wss://your-relay-server.com/ws
+
+# Agent token for authentication
+token: agt_your_secure_token_here
+
+# Auto-discovery: automatically detect tmux sessions
+autoDiscovery: true
+
+# Or manually specify sessions:
+# sessions:
+#   - id: my-workstation/dev
+#     tmuxSession: dev
+#     label: "Development"
+#   - id: my-workstation/work
+#     tmuxSession: work
+#     label: "Work Projects"</code></pre>
+                </div>
+
+                <h3>Agent 실행</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Bash</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Run directly
+java -jar ~/sessioncast-agent.jar
+
+# Or run in background with nohup
+nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code></pre>
+                </div>
+
+                <h3>launchd Service (macOS)</h3>
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>~/Library/LaunchAgents/com.sessioncast.agent.plist</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;com.sessioncast.agent&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;/usr/bin/java&lt;/string&gt;
+        &lt;string&gt;-jar&lt;/string&gt;
+        &lt;string&gt;/Users/YOUR_USERNAME/sessioncast-agent.jar&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;RunAtLoad&lt;/key&gt;
+    &lt;true/&gt;
+    &lt;key&gt;KeepAlive&lt;/key&gt;
+    &lt;true/&gt;
+    &lt;key&gt;StandardOutPath&lt;/key&gt;
+    &lt;string&gt;/Users/YOUR_USERNAME/Library/Logs/sessioncast-agent.log&lt;/string&gt;
+    &lt;key&gt;StandardErrorPath&lt;/key&gt;
+    &lt;string&gt;/Users/YOUR_USERNAME/Library/Logs/sessioncast-agent.error.log&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+                </div>
+
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <span>Load Service</span>
+                        <button class="copy-btn" data-clipboard>Copy</button>
+                    </div>
+                    <pre class="code-block"><code># Load the service
+launchctl load ~/Library/LaunchAgents/com.sessioncast.agent.plist
+
+# Check status
+launchctl list | grep sessioncast
+
+# Unload if needed
+launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
+                </div>
+            </section>
+
+            <section id="configuration" class="docs-section">
+                <h2>Configuration Reference</h2>
+
+                <h3>Relay Server Environment Variables</h3>
+                <div class="config-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Description</th>
+                                <th>Default</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>GOOGLE_CLIENT_ID</code></td>
+                                <td>Google OAuth 2.0 Client ID</td>
+                                <td>Required</td>
+                            </tr>
+                            <tr>
+                                <td><code>GOOGLE_CLIENT_SECRET</code></td>
+                                <td>Google OAuth 2.0 Client Secret</td>
+                                <td>Required</td>
+                            </tr>
+                            <tr>
+                                <td><code>JWT_SECRET</code></td>
+                                <td>JWT 서명 키 (최소 256 bits)</td>
+                                <td>Required</td>
+                            </tr>
+                            <tr>
+                                <td><code>FRONTEND_URL</code></td>
+                                <td>Web Client URL</td>
+                                <td>http://localhost:3000</td>
+                            </tr>
+                            <tr>
+                                <td><code>CORS_ORIGINS</code></td>
+                                <td>허용된 CORS origins (쉼표 구분)</td>
+                                <td>http://localhost:3000</td>
+                            </tr>
+                            <tr>
+                                <td><code>ALLOWED_DOMAINS</code></td>
+                                <td>허용된 이메일 도메인 (쉼표 구분)</td>
+                                <td>모든 도메인 허용</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Agent Configuration (YAML)</h3>
+                <div class="config-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>machineId</code></td>
+                                <td>고유한 머신 식별자</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td><code>relay</code></td>
+                                <td>Relay Server WebSocket URL</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td><code>token</code></td>
+                                <td>Agent 인증 토큰</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td><code>autoDiscovery</code></td>
+                                <td>tmux 세션 자동 감지</td>
+                                <td>No (default: false)</td>
+                            </tr>
+                            <tr>
+                                <td><code>sessions</code></td>
+                                <td>수동 세션 설정 목록</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <nav class="docs-pagination">
+                <a href="/" class="prev-link">
+                    <span class="arrow">←</span>
+                    <span>Home</span>
+                </a>
+                <a href="guide.html" class="next-link">
+                    <span>Usage Guide</span>
+                    <span class="arrow">→</span>
+                </a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 SessionCast. Released under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="docs.js"></script>
+</body>
+</html>
