@@ -43,10 +43,8 @@
                 <h3>Installation</h3>
                 <ul>
                     <li><a href="#overview">Overview</a></li>
-                    <li><a href="#prerequisites">Prerequisites</a></li>
-                    <li><a href="#relay-server">Relay Server</a></li>
-                    <li><a href="#web-client">Web Client</a></li>
-                    <li><a href="#agent">Agent</a></li>
+                    <li><a href="#deployment">Choose Deployment</a></li>
+                    <li><a href="#agent">Agent Setup</a></li>
                     <li><a href="#configuration">Configuration</a></li>
                 </ul>
             </nav>
@@ -55,7 +53,7 @@
         <article class="docs-content">
             <header class="docs-header">
                 <h1>Installation Guide</h1>
-                <p>Step-by-step guide to install and configure SessionCast.</p>
+                <p>Choose your deployment type and follow the step-by-step guide.</p>
             </header>
 
             <section id="overview" class="docs-section">
@@ -103,193 +101,294 @@
                 </div>
             </section>
 
-            <section id="prerequisites" class="docs-section">
-                <h2>Prerequisites</h2>
+            <section id="deployment" class="docs-section">
+                <h2>Choose Your Deployment</h2>
 
-                <h3>Relay Server & Web Client</h3>
-                <ul class="prereq-list">
-                    <li>Java 17 or higher (Relay Server)</li>
-                    <li>Node.js 18 or higher (for Web Client build)</li>
-                    <li>Docker (optional)</li>
-                    <li>OAuth 2.0 Client ID from Google Cloud Console</li>
-                </ul>
+                <div class="deploy-tabs">
+                    <div class="deploy-tab-buttons">
+                        <button class="deploy-tab-btn active" data-tab="local">
+                            <span class="tab-icon">🏠</span>
+                            <span>Local</span>
+                            <span class="tab-badge">Internal</span>
+                        </button>
+                        <button class="deploy-tab-btn" data-tab="aws">
+                            <span class="tab-icon">☁️</span>
+                            <span>AWS</span>
+                            <span class="tab-badge">Production</span>
+                        </button>
+                        <button class="deploy-tab-btn" data-tab="saas">
+                            <span class="tab-icon">✨</span>
+                            <span>SaaS</span>
+                            <span class="tab-badge coming-soon">Coming Soon</span>
+                        </button>
+                    </div>
 
-                <h3>Agent</h3>
+                    <!-- Local Deployment -->
+                    <div class="deploy-tab-content active" id="tab-local">
+                        <div class="info-box">
+                            <h4>Local Deployment (Internal Use)</h4>
+                            <p>Run SessionCast on your local network for personal use or internal team access. Best for testing, development, or home office setups.</p>
+                        </div>
+
+                        <h3>Prerequisites</h3>
+                        <ul class="prereq-list">
+                            <li>Java 17 or higher</li>
+                            <li>Node.js 18 or higher (for Web Client build)</li>
+                            <li>Docker (recommended) or local environment</li>
+                            <li>OAuth 2.0 Client ID from Google Cloud Console</li>
+                        </ul>
+
+                        <h3>Quick Start with Docker</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Docker Compose</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Clone the repository
+git clone https://github.com/sessioncast/server.git
+cd server
+
+# Create .env file
+cat > .env << EOF
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
+JWT_SECRET=your-jwt-secret-key-at-least-256-bits
+FRONTEND_URL=http://localhost:3000
+CORS_ORIGINS=http://localhost:3000
+EOF
+
+# Run with Docker Compose
+docker-compose up -d</code></pre>
+                        </div>
+
+                        <h3>Manual Setup</h3>
+                        <h4>1. Relay Server</h4>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Bash</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Clone and build
+git clone https://github.com/sessioncast/server.git
+cd server
+./gradlew build -x test
+
+# Run
+java -jar build/libs/relay-0.0.1-SNAPSHOT.jar</code></pre>
+                        </div>
+
+                        <h4>2. Web Client</h4>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Bash</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Clone and build
+git clone https://github.com/sessioncast/web.git
+cd web
+npm install
+
+# Configure
+echo "VITE_API_URL=http://localhost:8080" > .env
+echo "VITE_WS_URL=ws://localhost:8080/ws" >> .env
+
+# Run development server
+npm run dev</code></pre>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Google OAuth Setup</h4>
+                            <ol>
+                                <li>Go to <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
+                                <li>Create OAuth 2.0 Client ID (Web application type)</li>
+                                <li>Add authorized redirect URI: <code>http://localhost:8080/login/oauth2/code/google</code></li>
+                                <li>Copy Client ID and Secret to your environment</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- AWS Deployment -->
+                    <div class="deploy-tab-content" id="tab-aws">
+                        <div class="info-box">
+                            <h4>AWS Deployment (Production)</h4>
+                            <p>Deploy SessionCast to AWS for reliable, scalable production use. Includes HTTPS, load balancing, and auto-scaling options.</p>
+                        </div>
+
+                        <h3>Prerequisites</h3>
+                        <ul class="prereq-list">
+                            <li>AWS Account with appropriate permissions</li>
+                            <li>AWS CLI configured</li>
+                            <li>Domain name (for SSL certificate)</li>
+                            <li>OAuth 2.0 Client ID from Google Cloud Console</li>
+                        </ul>
+
+                        <h3>Architecture Overview</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>AWS Architecture</span>
+                            </div>
+                            <pre class="code-block"><code>┌─────────────────────────────────────────────────────────┐
+│                      Route 53                           │
+│                    (DNS + SSL)                          │
+└─────────────────────┬───────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────┐
+│              Application Load Balancer                   │
+│                   (HTTPS:443)                            │
+└─────────────────────┬───────────────────────────────────┘
+                      │
+        ┌─────────────┴─────────────┐
+        │                           │
+┌───────▼───────┐           ┌───────▼───────┐
+│   ECS Fargate │           │   S3 + CF     │
+│ (Relay Server)│           │ (Web Client)  │
+└───────────────┘           └───────────────┘</code></pre>
+                        </div>
+
+                        <h3>Step 1: Create ECR Repository</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>AWS CLI</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Create ECR repository
+aws ecr create-repository --repository-name sessioncast-server
+
+# Login to ECR
+aws ecr get-login-password --region us-east-1 | \
+  docker login --username AWS --password-stdin \
+  YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+
+# Build and push
+docker build -t sessioncast-server .
+docker tag sessioncast-server:latest \
+  YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/sessioncast-server:latest
+docker push YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/sessioncast-server:latest</code></pre>
+                        </div>
+
+                        <h3>Step 2: Create ECS Cluster</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>AWS CLI</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Create cluster
+aws ecs create-cluster --cluster-name sessioncast-cluster
+
+# Create task definition (save as task-definition.json)
+{
+  "family": "sessioncast-server",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "server",
+      "image": "YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/sessioncast-server:latest",
+      "portMappings": [{"containerPort": 8080}],
+      "environment": [
+        {"name": "GOOGLE_CLIENT_ID", "value": "your-client-id"},
+        {"name": "GOOGLE_CLIENT_SECRET", "value": "your-secret"},
+        {"name": "JWT_SECRET", "value": "your-jwt-secret"},
+        {"name": "FRONTEND_URL", "value": "https://your-domain.com"}
+      ]
+    }
+  ]
+}
+
+# Register task
+aws ecs register-task-definition --cli-input-json file://task-definition.json</code></pre>
+                        </div>
+
+                        <h3>Step 3: Deploy Web Client to S3 + CloudFront</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>AWS CLI</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Create S3 bucket
+aws s3 mb s3://sessioncast-web-client
+
+# Build web client
+cd web
+npm run build
+
+# Upload to S3
+aws s3 sync dist/ s3://sessioncast-web-client --delete
+
+# Create CloudFront distribution (use AWS Console or CLI)
+# Point to S3 bucket with OAI for security</code></pre>
+                        </div>
+
+                        <h3>Step 4: Configure SSL with ACM</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>AWS CLI</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Request certificate (must be in us-east-1 for CloudFront)
+aws acm request-certificate \
+  --domain-name your-domain.com \
+  --validation-method DNS \
+  --region us-east-1
+
+# Validate via Route 53 DNS records</code></pre>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>Security Best Practices</h4>
+                            <ul>
+                                <li>Store secrets in AWS Secrets Manager</li>
+                                <li>Use IAM roles with minimal permissions</li>
+                                <li>Enable VPC for ECS tasks</li>
+                                <li>Configure WAF for additional protection</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- SaaS Coming Soon -->
+                    <div class="deploy-tab-content" id="tab-saas">
+                        <div class="coming-soon-box">
+                            <div class="icon">🚀</div>
+                            <h3>SessionCast Cloud Coming Soon</h3>
+                            <p>We're building a fully managed SaaS version. No server setup needed - just install the agent and start streaming.</p>
+
+                            <div class="coming-soon-features">
+                                <div class="feature">
+                                    <span class="check">✓</span>
+                                    <span>No server management</span>
+                                </div>
+                                <div class="feature">
+                                    <span class="check">✓</span>
+                                    <span>Instant setup</span>
+                                </div>
+                                <div class="feature">
+                                    <span class="check">✓</span>
+                                    <span>Auto-scaling</span>
+                                </div>
+                                <div class="feature">
+                                    <span class="check">✓</span>
+                                    <span>Team management</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="agent" class="docs-section">
+                <h2>Agent Setup</h2>
+                <p>The Agent runs on your local machine and streams tmux sessions to the server. This step is the same for all deployment types.</p>
+
+                <h3>Prerequisites</h3>
                 <ul class="prereq-list">
                     <li>Java 17 or higher</li>
                     <li>tmux installed</li>
                     <li>Linux or macOS</li>
                 </ul>
-            </section>
 
-            <section id="relay-server" class="docs-section">
-                <h2>Relay Server Installation</h2>
-
-                <h3>Option 1: Docker (Recommended)</h3>
-                <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <span>Docker</span>
-                        <button class="copy-btn" data-clipboard>Copy</button>
-                    </div>
-                    <pre class="code-block"><code># Pull image
-docker pull ghcr.io/sessioncast/server:latest
-
-# Run with environment variables
-docker run -d \
-  --name sessioncast-server \
-  -p 8080:8080 \
-  -e GOOGLE_CLIENT_ID=your-client-id \
-  -e GOOGLE_CLIENT_SECRET=your-client-secret \
-  -e JWT_SECRET=your-jwt-secret-key-at-least-256-bits \
-  -e FRONTEND_URL=https://your-domain.com \
-  -e CORS_ORIGINS=https://your-domain.com \
-  ghcr.io/sessioncast/server:latest</code></pre>
-                </div>
-
-                <h3>Option 2: Build from Source</h3>
-                <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <span>Bash</span>
-                        <button class="copy-btn" data-clipboard>Copy</button>
-                    </div>
-                    <pre class="code-block"><code># Clone repository
-git clone https://github.com/sessioncast/server.git
-cd server
-
-# Build
-./gradlew build -x test
-
-# Run
-java -jar build/libs/relay-0.0.1-SNAPSHOT.jar</code></pre>
-                </div>
-
-                <h3>Option 3: systemd Service (Linux)</h3>
-                <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <span>/etc/systemd/system/sessioncast.service</span>
-                        <button class="copy-btn" data-clipboard>Copy</button>
-                    </div>
-                    <pre class="code-block"><code>[Unit]
-Description=SessionCast Relay Server
-After=network.target
-
-[Service]
-Type=simple
-User=sessioncast
-WorkingDirectory=/opt/sessioncast
-ExecStart=/usr/bin/java -jar /opt/sessioncast/relay.jar
-Restart=always
-RestartSec=10
-
-Environment=GOOGLE_CLIENT_ID=your-client-id
-Environment=GOOGLE_CLIENT_SECRET=your-client-secret
-Environment=JWT_SECRET=your-jwt-secret-key
-Environment=FRONTEND_URL=https://your-domain.com
-
-[Install]
-WantedBy=multi-user.target</code></pre>
-                </div>
-
-                <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <span>Service Management</span>
-                        <button class="copy-btn" data-clipboard>Copy</button>
-                    </div>
-                    <pre class="code-block"><code># Enable and start service
-sudo systemctl daemon-reload
-sudo systemctl enable sessioncast
-sudo systemctl start sessioncast
-
-# Check status
-sudo systemctl status sessioncast</code></pre>
-                </div>
-
-                <div class="info-box">
-                    <h4>Google OAuth Setup</h4>
-                    <ol>
-                        <li>Create a project in <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
-                        <li>Create OAuth 2.0 Client ID (Web application type)</li>
-                        <li>Add authorized redirect URI: <code>https://your-domain.com/login/oauth2/code/google</code></li>
-                        <li>Set Client ID and Client Secret as environment variables</li>
-                    </ol>
-                </div>
-            </section>
-
-            <section id="web-client" class="docs-section">
-                <h2>Web Client Installation</h2>
-
-                <p>Web Client can be deployed together with the Relay Server or on separate static hosting.</p>
-
-                <h3>Build from Source</h3>
-                <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <span>Bash</span>
-                        <button class="copy-btn" data-clipboard>Copy</button>
-                    </div>
-                    <pre class="code-block"><code># Clone repository
-git clone https://github.com/sessioncast/web.git
-cd web
-
-# Install dependencies
-npm install
-
-# Create environment file
-cat > .env << EOF
-VITE_API_URL=https://your-relay-server.com
-VITE_WS_URL=wss://your-relay-server.com/ws
-EOF
-
-# Build for production
-npm run build
-
-# Output is in 'dist' folder</code></pre>
-                </div>
-
-                <h3>Nginx Configuration</h3>
-                <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <span>/etc/nginx/sites-available/sessioncast</span>
-                        <button class="copy-btn" data-clipboard>Copy</button>
-                    </div>
-                    <pre class="code-block"><code>server {
-    listen 443 ssl http2;
-    server_name your-domain.com;
-
-    ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
-
-    # Serve static files
-    root /var/www/sessioncast;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Proxy API requests to relay server
-    location /api/ {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-
-    # WebSocket proxy
-    location /ws {
-        proxy_pass http://localhost:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-        proxy_read_timeout 86400;
-    }
-}</code></pre>
-                </div>
-            </section>
-
-            <section id="agent" class="docs-section">
-                <h2>Agent Installation</h2>
-
-                <h3>Build from Source</h3>
+                <h3>Install Agent</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>Bash</span>
@@ -307,7 +406,7 @@ cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
                 </div>
 
                 <h3>Generate Agent Token</h3>
-                <p>The Agent needs a token to connect to the Relay Server. Add a token to the Relay Server's <code>agent-tokens.json</code>:</p>
+                <p>Add a token to the server's <code>agent-tokens.json</code>:</p>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
@@ -327,11 +426,11 @@ cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
 
                 <div class="warning-box">
                     <h4>Security Warning</h4>
-                    <p>Agent Token is sensitive information. Only share through secure channels and never commit to public repositories.</p>
+                    <p>Agent Token is sensitive. Never commit to public repositories.</p>
                 </div>
 
-                <h3>Agent Configuration</h3>
-                <p>Create a <code>.tmux-remote.yml</code> file in your home directory:</p>
+                <h3>Configure Agent</h3>
+                <p>Create <code>~/.tmux-remote.yml</code>:</p>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
@@ -342,25 +441,16 @@ cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
 machineId: my-workstation
 
 # Relay server WebSocket URL
-relay: wss://your-relay-server.com/ws
+relay: wss://your-server.com/ws   # or ws://localhost:8080/ws for local
 
 # Agent token for authentication
 token: agt_your_secure_token_here
 
 # Auto-discovery: automatically detect tmux sessions
-autoDiscovery: true
-
-# Or manually specify sessions:
-# sessions:
-#   - id: my-workstation/dev
-#     tmuxSession: dev
-#     label: "Development"
-#   - id: my-workstation/work
-#     tmuxSession: work
-#     label: "Work Projects"</code></pre>
+autoDiscovery: true</code></pre>
                 </div>
 
-                <h3>Running the Agent</h3>
+                <h3>Run Agent</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>Bash</span>
@@ -369,11 +459,11 @@ autoDiscovery: true
                     <pre class="code-block"><code># Run directly
 java -jar ~/sessioncast-agent.jar
 
-# Or run in background with nohup
+# Or run in background
 nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code></pre>
                 </div>
 
-                <h3>launchd Service (macOS)</h3>
+                <h3>Auto-start on macOS (launchd)</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>~/Library/LaunchAgents/com.sessioncast.agent.plist</span>
@@ -396,10 +486,6 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
     &lt;true/&gt;
     &lt;key&gt;KeepAlive&lt;/key&gt;
     &lt;true/&gt;
-    &lt;key&gt;StandardOutPath&lt;/key&gt;
-    &lt;string&gt;/Users/YOUR_USERNAME/Library/Logs/sessioncast-agent.log&lt;/string&gt;
-    &lt;key&gt;StandardErrorPath&lt;/key&gt;
-    &lt;string&gt;/Users/YOUR_USERNAME/Library/Logs/sessioncast-agent.error.log&lt;/string&gt;
 &lt;/dict&gt;
 &lt;/plist&gt;</code></pre>
                 </div>
@@ -409,14 +495,7 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
                         <span>Load Service</span>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
-                    <pre class="code-block"><code># Load the service
-launchctl load ~/Library/LaunchAgents/com.sessioncast.agent.plist
-
-# Check status
-launchctl list | grep sessioncast
-
-# Unload if needed
-launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
+                    <pre class="code-block"><code>launchctl load ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
                 </div>
             </section>
 
@@ -533,5 +612,21 @@ launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
 
     <script src="script.js"></script>
     <script src="docs.js"></script>
+    <script>
+        // Deployment tabs
+        document.querySelectorAll('.deploy-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+
+                // Update buttons
+                document.querySelectorAll('.deploy-tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update content
+                document.querySelectorAll('.deploy-tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById('tab-' + tab).classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>

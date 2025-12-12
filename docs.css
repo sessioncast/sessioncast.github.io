@@ -524,6 +524,178 @@ kbd {
     color: var(--color-primary);
 }
 
+/* Deployment Tabs */
+.deploy-tabs {
+    margin: 32px 0;
+}
+
+.deploy-tab-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0;
+}
+
+.deploy-tab-btn {
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: -1px;
+}
+
+.deploy-tab-btn:hover {
+    color: var(--color-text);
+}
+
+.deploy-tab-btn.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.deploy-tab-btn .tab-icon {
+    font-size: 1.1rem;
+}
+
+.deploy-tab-btn .tab-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    background: var(--color-accent);
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.deploy-tab-btn .tab-badge.coming-soon {
+    background: var(--color-text-muted);
+}
+
+.deploy-tab-content {
+    display: none;
+}
+
+.deploy-tab-content.active {
+    display: block;
+}
+
+/* Coming Soon Box */
+.coming-soon-box {
+    text-align: center;
+    padding: 80px 40px;
+    background: var(--color-card);
+    border: 2px dashed var(--color-border);
+    border-radius: 12px;
+    margin: 24px 0;
+}
+
+.coming-soon-box .icon {
+    font-size: 4rem;
+    margin-bottom: 24px;
+}
+
+.coming-soon-box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: var(--color-text);
+}
+
+.coming-soon-box p {
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0 auto 24px;
+}
+
+.coming-soon-box .notify-form {
+    display: flex;
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.coming-soon-box .notify-form input {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-size: 0.9rem;
+}
+
+.coming-soon-box .notify-form input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.coming-soon-box .notify-form button {
+    padding: 12px 24px;
+    background: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.coming-soon-box .notify-form button:hover {
+    background: var(--color-primary-dark);
+}
+
+.coming-soon-features {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.coming-soon-features .feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.coming-soon-features .feature .check {
+    color: var(--color-accent);
+}
+
+/* Deploy type badges */
+.deploy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.deploy-badge.local {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--color-accent);
+}
+
+.deploy-badge.aws {
+    background: rgba(251, 191, 36, 0.15);
+    color: var(--color-accent-yellow);
+}
+
+.deploy-badge.saas {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .component-cards {
