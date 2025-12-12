@@ -58,6 +58,19 @@
 
             <section id="overview" class="docs-section">
                 <h2>개요</h2>
+
+                <div class="disclaimer-box">
+                    <h4>⚠️ 보안 면책 조항</h4>
+                    <p><strong>SessionCast는 어떠한 보증 없이 "있는 그대로" 제공됩니다.</strong> 본 소프트웨어를 사용함으로써 다음에 동의하는 것으로 간주됩니다:</p>
+                    <ul>
+                        <li>배포 및 데이터의 보안에 대한 책임은 전적으로 사용자에게 있습니다</li>
+                        <li>개발자는 보안 침해, 데이터 손실 또는 손해에 대해 어떠한 책임도 지지 않습니다</li>
+                        <li>터미널 세션에는 민감한 정보가 포함될 수 있으므로 적절한 접근 제어를 사용하세요</li>
+                        <li>자체 호스팅 배포 시 적절한 보안 설정이 필요합니다 (HTTPS, 방화벽, 인증)</li>
+                    </ul>
+                    <p>전체 약관은 <a href="https://github.com/sessioncast/server/blob/main/LICENSE" target="_blank">MIT 라이선스</a>를 참조하세요.</p>
+                </div>
+
                 <p>SessionCast는 세 가지 주요 컴포넌트로 구성됩니다:</p>
 
                 <div class="component-cards">
@@ -606,6 +619,9 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
         <div class="container">
             <div class="footer-bottom">
                 <p>&copy; 2024 SessionCast. Released under MIT License.</p>
+            </div>
+            <div class="footer-disclaimer">
+                <p>⚠️ 면책 조항: 본 소프트웨어는 어떠한 보증 없이 "있는 그대로" 제공됩니다. 개발자는 본 소프트웨어 사용으로 인한 보안 문제, 데이터 침해 또는 손해에 대해 책임지지 않습니다. 배포 환경의 보안은 사용자의 책임입니다.</p>
             </div>
         </div>
     </footer>

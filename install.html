@@ -58,6 +58,19 @@
 
             <section id="overview" class="docs-section">
                 <h2>Overview</h2>
+
+                <div class="disclaimer-box">
+                    <h4>⚠️ Security Disclaimer</h4>
+                    <p><strong>SessionCast is provided "AS IS" without warranty of any kind.</strong> By using this software, you acknowledge and agree that:</p>
+                    <ul>
+                        <li>You are solely responsible for the security of your deployment and data</li>
+                        <li>The developers assume no liability for any security breaches, data loss, or damages</li>
+                        <li>Terminal sessions may contain sensitive information - use appropriate access controls</li>
+                        <li>Self-hosted deployments require proper security configuration (HTTPS, firewalls, authentication)</li>
+                    </ul>
+                    <p>Please review the <a href="https://github.com/sessioncast/server/blob/main/LICENSE" target="_blank">MIT License</a> for full terms.</p>
+                </div>
+
                 <p>SessionCast consists of three main components:</p>
 
                 <div class="component-cards">
@@ -606,6 +619,9 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
         <div class="container">
             <div class="footer-bottom">
                 <p>&copy; 2024 SessionCast. Released under MIT License.</p>
+            </div>
+            <div class="footer-disclaimer">
+                <p>⚠️ Disclaimer: This software is provided "AS IS" without warranty. The developers are not responsible for any security issues, data breaches, or damages arising from use of this software. Users are solely responsible for securing their deployments.</p>
             </div>
         </div>
     </footer>

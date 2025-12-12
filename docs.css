@@ -696,6 +696,65 @@ kbd {
     color: var(--color-primary);
 }
 
+/* Security Disclaimer */
+.disclaimer-box {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-left: 4px solid #ef4444;
+    border-radius: 8px;
+}
+
+.disclaimer-box h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.disclaimer-box p {
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.disclaimer-box p:last-child {
+    margin-bottom: 0;
+}
+
+.disclaimer-box ul {
+    margin: 12px 0;
+    padding-left: 20px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.disclaimer-box ul li {
+    margin-bottom: 4px;
+}
+
+/* Footer Disclaimer */
+.footer-disclaimer {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.footer-disclaimer p {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .component-cards {
