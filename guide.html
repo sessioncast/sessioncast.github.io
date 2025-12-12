@@ -23,7 +23,10 @@
                 <li><a href="install.html">Installation</a></li>
                 <li><a href="guide.html" class="active">Usage Guide</a></li>
                 <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
-                <li class="lang-switch"><a href="ko/guide.html" title="한국어">🇰🇷 KO</a></li>
+                <li class="lang-switch">
+                    <a href="guide.html" class="active">EN</a>
+                    <a href="ko/guide.html">KO</a>
+                </li>
             </ul>
             <button class="nav-toggle" aria-label="Toggle menu">
                 <span></span>
@@ -52,19 +55,19 @@
         <article class="docs-content">
             <header class="docs-header">
                 <h1>Usage Guide</h1>
-                <p>SessionCast를 효과적으로 사용하는 방법을 알아봅니다.</p>
+                <p>Learn how to use SessionCast effectively.</p>
             </header>
 
             <section id="getting-started" class="docs-section">
                 <h2>Getting Started</h2>
 
-                <h3>기본 워크플로우</h3>
+                <h3>Basic Workflow</h3>
                 <div class="workflow-steps">
                     <div class="workflow-step">
                         <div class="step-icon">1</div>
                         <div class="step-content">
-                            <h4>tmux 세션 생성</h4>
-                            <p>로컬 머신에서 tmux 세션을 생성합니다.</p>
+                            <h4>Create tmux Session</h4>
+                            <p>Create a tmux session on your local machine.</p>
                             <div class="code-block-wrapper">
                                 <pre class="code-block"><code>tmux new -s workspace</code></pre>
                             </div>
@@ -74,14 +77,14 @@
                     <div class="workflow-step">
                         <div class="step-icon">2</div>
                         <div class="step-content">
-                            <h4>Agent 확인</h4>
-                            <p>Agent가 실행 중이면 자동으로 세션이 감지됩니다.</p>
+                            <h4>Verify Agent</h4>
+                            <p>If the Agent is running, sessions are detected automatically.</p>
                             <div class="code-block-wrapper">
-                                <pre class="code-block"><code># Agent 로그 확인
+                                <pre class="code-block"><code># Check Agent logs
 tail -f ~/sessioncast-agent.log
 
-# 세션 등록 메시지 확인
-# "Session 'workspace' registered" 출력 확인</code></pre>
+# Verify session registration message
+# Look for "Session 'workspace' registered" output</code></pre>
                             </div>
                         </div>
                     </div>
@@ -89,16 +92,16 @@ tail -f ~/sessioncast-agent.log
                     <div class="workflow-step">
                         <div class="step-icon">3</div>
                         <div class="step-content">
-                            <h4>웹에서 접속</h4>
-                            <p>브라우저에서 SessionCast 웹에 접속하고 Google 계정으로 로그인합니다.</p>
+                            <h4>Access via Web</h4>
+                            <p>Open SessionCast in your browser and sign in with your Google account.</p>
                         </div>
                     </div>
 
                     <div class="workflow-step">
                         <div class="step-icon">4</div>
                         <div class="step-content">
-                            <h4>세션 선택 및 사용</h4>
-                            <p>세션 목록에서 원하는 세션을 클릭하면 터미널이 표시됩니다.</p>
+                            <h4>Select and Use Session</h4>
+                            <p>Click on a session from the list to view the terminal.</p>
                         </div>
                     </div>
                 </div>
@@ -107,33 +110,33 @@ tail -f ~/sessioncast-agent.log
             <section id="tmux-sessions" class="docs-section">
                 <h2>tmux Sessions</h2>
 
-                <h3>세션 생성</h3>
+                <h3>Creating Sessions</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
-                        <span>tmux 기본 명령어</span>
+                        <span>Basic tmux Commands</span>
                     </div>
-                    <pre class="code-block"><code># 새 세션 생성
+                    <pre class="code-block"><code># Create new session
 tmux new -s session-name
 
-# 백그라운드로 세션 생성
+# Create session in background
 tmux new -d -s session-name
 
-# 세션에 창(window) 추가
+# Add window to session
 tmux new-window -t session-name
 
-# 세션 목록 확인
+# List sessions
 tmux ls</code></pre>
                 </div>
 
-                <h3>세션 이름 규칙</h3>
-                <p>SessionCast에서 세션은 <code>machineId/tmuxSession</code> 형식으로 식별됩니다:</p>
+                <h3>Session Naming Convention</h3>
+                <p>In SessionCast, sessions are identified using the <code>machineId/tmuxSession</code> format:</p>
                 <ul class="feature-list">
-                    <li><code>my-workstation/dev</code> - my-workstation 머신의 dev 세션</li>
-                    <li><code>server-01/monitoring</code> - server-01 머신의 monitoring 세션</li>
+                    <li><code>my-workstation/dev</code> - dev session on my-workstation machine</li>
+                    <li><code>server-01/monitoring</code> - monitoring session on server-01 machine</li>
                 </ul>
 
-                <h3>Auto-Discovery 모드</h3>
-                <p><code>autoDiscovery: true</code>를 설정하면 Agent가 자동으로 모든 tmux 세션을 감지합니다:</p>
+                <h3>Auto-Discovery Mode</h3>
+                <p>Setting <code>autoDiscovery: true</code> allows the Agent to automatically detect all tmux sessions:</p>
                 <div class="code-block-wrapper">
                     <pre class="code-block"><code># ~/.tmux-remote.yml
 machineId: my-workstation
@@ -143,8 +146,8 @@ autoDiscovery: true</code></pre>
                 </div>
 
                 <div class="info-box">
-                    <h4>Auto-Discovery 제외</h4>
-                    <p>특정 세션을 제외하려면 세션 이름 앞에 <code>_</code> (언더스코어)를 붙이세요:</p>
+                    <h4>Excluding from Auto-Discovery</h4>
+                    <p>To exclude specific sessions, prefix the session name with <code>_</code> (underscore):</p>
                     <pre><code>tmux new -s _private-session</code></pre>
                 </div>
             </section>
@@ -152,48 +155,48 @@ autoDiscovery: true</code></pre>
             <section id="web-interface" class="docs-section">
                 <h2>Web Interface</h2>
 
-                <h3>로그인</h3>
-                <p>SessionCast는 Google OAuth 2.0을 사용합니다:</p>
+                <h3>Login</h3>
+                <p>SessionCast uses Google OAuth 2.0:</p>
                 <ol>
-                    <li>웹 페이지에서 "Sign in with Google" 버튼 클릭</li>
-                    <li>Google 계정 선택 및 인증</li>
-                    <li>자동으로 세션 목록 페이지로 이동</li>
+                    <li>Click the "Sign in with Google" button on the web page</li>
+                    <li>Select and authenticate your Google account</li>
+                    <li>You'll be automatically redirected to the session list</li>
                 </ol>
 
                 <div class="info-box">
-                    <h4>도메인 제한</h4>
-                    <p>관리자가 <code>ALLOWED_DOMAINS</code>를 설정한 경우, 해당 도메인의 이메일만 접속할 수 있습니다.</p>
+                    <h4>Domain Restriction</h4>
+                    <p>If the administrator has set <code>ALLOWED_DOMAINS</code>, only emails from those domains can access.</p>
                 </div>
 
-                <h3>세션 목록</h3>
-                <p>로그인 후 자신의 Agent Token으로 등록된 세션만 표시됩니다:</p>
+                <h3>Session List</h3>
+                <p>After login, only sessions registered with your Agent Token are displayed:</p>
                 <ul class="feature-list">
-                    <li><strong>세션 라벨</strong>: 설정된 라벨 또는 tmux 세션 이름</li>
-                    <li><strong>머신 ID</strong>: 세션이 실행 중인 머신</li>
-                    <li><strong>상태 표시</strong>: 연결됨/연결 해제됨</li>
+                    <li><strong>Session Label</strong>: Configured label or tmux session name</li>
+                    <li><strong>Machine ID</strong>: The machine where the session is running</li>
+                    <li><strong>Status</strong>: Connected/Disconnected</li>
                 </ul>
 
-                <h3>터미널 뷰</h3>
-                <p>세션을 클릭하면 터미널 화면이 표시됩니다:</p>
+                <h3>Terminal View</h3>
+                <p>Clicking a session displays the terminal screen:</p>
                 <ul class="feature-list">
-                    <li><strong>실시간 화면</strong>: tmux 세션의 현재 상태</li>
-                    <li><strong>자동 리사이징</strong>: 브라우저 창 크기에 맞게 터미널 크기 조절</li>
-                    <li><strong>컬러 지원</strong>: ANSI 이스케이프 코드를 통한 컬러 출력</li>
+                    <li><strong>Real-time Display</strong>: Current state of the tmux session</li>
+                    <li><strong>Auto-resizing</strong>: Terminal adjusts to browser window size</li>
+                    <li><strong>Color Support</strong>: Color output via ANSI escape codes</li>
                 </ul>
             </section>
 
             <section id="keyboard-input" class="docs-section">
                 <h2>Keyboard Input</h2>
 
-                <h3>기본 입력</h3>
-                <p>터미널 영역을 클릭한 후 키보드 입력이 가능합니다:</p>
+                <h3>Basic Input</h3>
+                <p>Click the terminal area to enable keyboard input:</p>
                 <ul class="feature-list">
-                    <li>일반 텍스트 입력</li>
-                    <li>Enter 키로 명령 실행</li>
-                    <li>방향키, Backspace, Delete 등 특수 키</li>
+                    <li>Regular text input</li>
+                    <li>Execute commands with Enter key</li>
+                    <li>Arrow keys, Backspace, Delete and other special keys</li>
                 </ul>
 
-                <h3>Control 키 조합</h3>
+                <h3>Control Key Combinations</h3>
                 <div class="key-table">
                     <table>
                         <thead>
@@ -205,34 +208,34 @@ autoDiscovery: true</code></pre>
                         <tbody>
                             <tr>
                                 <td><kbd>Ctrl</kbd> + <kbd>C</kbd></td>
-                                <td>현재 프로세스 중단 (SIGINT)</td>
+                                <td>Interrupt current process (SIGINT)</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl</kbd> + <kbd>D</kbd></td>
-                                <td>EOF 전송 / 쉘 종료</td>
+                                <td>Send EOF / Exit shell</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td>
-                                <td>프로세스 일시 중지 (SIGTSTP)</td>
+                                <td>Suspend process (SIGTSTP)</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl</kbd> + <kbd>L</kbd></td>
-                                <td>화면 지우기</td>
+                                <td>Clear screen</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl</kbd> + <kbd>A</kbd></td>
-                                <td>줄 시작으로 이동</td>
+                                <td>Move to beginning of line</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl</kbd> + <kbd>E</kbd></td>
-                                <td>줄 끝으로 이동</td>
+                                <td>Move to end of line</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>tmux 프리픽스 키</h3>
-                <p>tmux의 기본 프리픽스 키는 <kbd>Ctrl</kbd> + <kbd>B</kbd>입니다:</p>
+                <h3>tmux Prefix Key</h3>
+                <p>The default tmux prefix key is <kbd>Ctrl</kbd> + <kbd>B</kbd>:</p>
                 <div class="key-table">
                     <table>
                         <thead>
@@ -244,130 +247,130 @@ autoDiscovery: true</code></pre>
                         <tbody>
                             <tr>
                                 <td><kbd>Ctrl+B</kbd> → <kbd>c</kbd></td>
-                                <td>새 창(window) 생성</td>
+                                <td>Create new window</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl+B</kbd> → <kbd>n</kbd></td>
-                                <td>다음 창으로 이동</td>
+                                <td>Next window</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl+B</kbd> → <kbd>p</kbd></td>
-                                <td>이전 창으로 이동</td>
+                                <td>Previous window</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl+B</kbd> → <kbd>%</kbd></td>
-                                <td>수직 분할</td>
+                                <td>Split vertically</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl+B</kbd> → <kbd>"</kbd></td>
-                                <td>수평 분할</td>
+                                <td>Split horizontally</td>
                             </tr>
                             <tr>
                                 <td><kbd>Ctrl+B</kbd> → <kbd>d</kbd></td>
-                                <td>세션에서 분리 (detach)</td>
+                                <td>Detach from session</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="warning-box">
-                    <h4>주의사항</h4>
-                    <p>일부 브라우저 단축키와 충돌할 수 있습니다. 예: <kbd>Ctrl+W</kbd>는 브라우저에서 탭을 닫습니다. 이러한 키는 터미널로 전달되지 않을 수 있습니다.</p>
+                    <h4>Note</h4>
+                    <p>Some browser shortcuts may conflict. For example, <kbd>Ctrl+W</kbd> closes the browser tab. These keys may not be passed to the terminal.</p>
                 </div>
             </section>
 
             <section id="session-management" class="docs-section">
                 <h2>Session Management</h2>
 
-                <h3>웹에서 세션 생성</h3>
-                <p>Web UI에서 새로운 tmux 세션을 생성할 수 있습니다:</p>
+                <h3>Creating Sessions from Web</h3>
+                <p>You can create new tmux sessions from the Web UI:</p>
                 <ol>
-                    <li>세션 목록 화면에서 "New Session" 버튼 클릭</li>
-                    <li>머신 선택</li>
-                    <li>세션 이름 입력</li>
-                    <li>"Create" 버튼 클릭</li>
+                    <li>Click "New Session" button on the session list screen</li>
+                    <li>Select a machine</li>
+                    <li>Enter session name</li>
+                    <li>Click "Create" button</li>
                 </ol>
-                <p>Agent가 요청을 받아 로컬에서 tmux 세션을 생성합니다.</p>
+                <p>The Agent receives the request and creates the tmux session locally.</p>
 
-                <h3>세션 종료</h3>
-                <p>세션을 종료하는 방법:</p>
+                <h3>Terminating Sessions</h3>
+                <p>Ways to terminate a session:</p>
                 <ul class="feature-list">
-                    <li><strong>웹 UI</strong>: 세션 목록에서 삭제 버튼 클릭</li>
-                    <li><strong>터미널</strong>: <code>exit</code> 명령 또는 <kbd>Ctrl+D</kbd></li>
-                    <li><strong>tmux 명령</strong>: <code>tmux kill-session -t session-name</code></li>
+                    <li><strong>Web UI</strong>: Click delete button in session list</li>
+                    <li><strong>Terminal</strong>: <code>exit</code> command or <kbd>Ctrl+D</kbd></li>
+                    <li><strong>tmux command</strong>: <code>tmux kill-session -t session-name</code></li>
                 </ul>
 
-                <h3>세션 목록 새로고침</h3>
-                <p>세션 목록은 자동으로 업데이트되지만, 수동으로 새로고침하려면:</p>
+                <h3>Refreshing Session List</h3>
+                <p>The session list updates automatically, but to refresh manually:</p>
                 <ul class="feature-list">
-                    <li>세션 목록 화면에서 새로고침 버튼 클릭</li>
-                    <li>브라우저 새로고침 (F5)</li>
+                    <li>Click refresh button on the session list screen</li>
+                    <li>Browser refresh (F5)</li>
                 </ul>
             </section>
 
             <section id="troubleshooting" class="docs-section">
                 <h2>Troubleshooting</h2>
 
-                <h3>세션이 목록에 표시되지 않음</h3>
+                <h3>Session Not Showing in List</h3>
                 <div class="troubleshoot-item">
-                    <h4>확인사항:</h4>
+                    <h4>Checklist:</h4>
                     <ol>
-                        <li>Agent가 실행 중인지 확인
+                        <li>Check if Agent is running
                             <pre><code>ps aux | grep sessioncast-agent</code></pre>
                         </li>
-                        <li>Agent 로그 확인
+                        <li>Check Agent logs
                             <pre><code>tail -f ~/sessioncast-agent.log</code></pre>
                         </li>
-                        <li>tmux 세션이 존재하는지 확인
+                        <li>Verify tmux session exists
                             <pre><code>tmux ls</code></pre>
                         </li>
-                        <li>Agent Token이 올바른지 확인</li>
-                        <li>웹에서 로그인한 이메일이 Token의 owner와 일치하는지 확인</li>
+                        <li>Verify Agent Token is correct</li>
+                        <li>Verify logged-in email matches Token owner</li>
                     </ol>
                 </div>
 
-                <h3>화면이 비어있음</h3>
+                <h3>Empty Screen</h3>
                 <div class="troubleshoot-item">
-                    <h4>원인:</h4>
-                    <p>새로 생성된 tmux 세션은 아직 어떤 명령도 실행되지 않아 빈 화면일 수 있습니다.</p>
-                    <h4>해결:</h4>
+                    <h4>Cause:</h4>
+                    <p>Newly created tmux sessions may show an empty screen if no commands have been executed yet.</p>
+                    <h4>Solution:</h4>
                     <ol>
-                        <li>터미널에서 직접 세션에 접속하여 명령 실행
+                        <li>Attach to the session directly from terminal and run a command
                             <pre><code>tmux attach -t session-name</code></pre>
                         </li>
-                        <li>또는 웹에서 아무 키나 입력하여 화면 갱신 유도</li>
+                        <li>Or press any key in the web interface to trigger a screen refresh</li>
                     </ol>
                 </div>
 
-                <h3>키 입력이 전달되지 않음</h3>
+                <h3>Keyboard Input Not Working</h3>
                 <div class="troubleshoot-item">
-                    <h4>확인사항:</h4>
+                    <h4>Checklist:</h4>
                     <ol>
-                        <li>터미널 영역을 클릭하여 포커스가 있는지 확인</li>
-                        <li>브라우저 개발자 도구에서 WebSocket 연결 상태 확인</li>
-                        <li>Agent 로그에서 키 수신 메시지 확인</li>
+                        <li>Click the terminal area to ensure it has focus</li>
+                        <li>Check WebSocket connection status in browser developer tools</li>
+                        <li>Check Agent logs for key input messages</li>
                     </ol>
                 </div>
 
-                <h3>연결이 자주 끊김</h3>
+                <h3>Frequent Disconnections</h3>
                 <div class="troubleshoot-item">
-                    <h4>가능한 원인:</h4>
+                    <h4>Possible Causes:</h4>
                     <ul>
-                        <li>네트워크 불안정</li>
-                        <li>프록시/방화벽 WebSocket 차단</li>
-                        <li>서버 리소스 부족</li>
+                        <li>Unstable network connection</li>
+                        <li>Proxy/firewall blocking WebSocket</li>
+                        <li>Server resource shortage</li>
                     </ul>
-                    <h4>해결:</h4>
+                    <h4>Solution:</h4>
                     <ol>
-                        <li>네트워크 연결 상태 확인</li>
-                        <li>프록시 설정에서 WebSocket 허용 확인</li>
-                        <li>서버 로그 확인:
+                        <li>Check network connection status</li>
+                        <li>Verify WebSocket is allowed in proxy settings</li>
+                        <li>Check server logs:
                             <pre><code>journalctl -u sessioncast -f</code></pre>
                         </li>
                     </ol>
                 </div>
 
-                <h3>Agent 재시작</h3>
+                <h3>Restarting the Agent</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>macOS (launchd)</span>
@@ -385,12 +388,12 @@ launchctl load ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
-                        <span>수동 실행</span>
+                        <span>Manual Execution</span>
                     </div>
-                    <pre class="code-block"><code># 기존 프로세스 종료
+                    <pre class="code-block"><code># Kill existing process
 pkill -f sessioncast-agent
 
-# 재시작
+# Restart
 nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code></pre>
                 </div>
             </section>

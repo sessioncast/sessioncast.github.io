@@ -23,7 +23,10 @@
                 <li><a href="install.html" class="active">Installation</a></li>
                 <li><a href="guide.html">Usage Guide</a></li>
                 <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
-                <li class="lang-switch"><a href="ko/install.html" title="한국어">🇰🇷 KO</a></li>
+                <li class="lang-switch">
+                    <a href="install.html" class="active">EN</a>
+                    <a href="ko/install.html">KO</a>
+                </li>
             </ul>
             <button class="nav-toggle" aria-label="Toggle menu">
                 <span></span>
@@ -52,12 +55,12 @@
         <article class="docs-content">
             <header class="docs-header">
                 <h1>Installation Guide</h1>
-                <p>SessionCast를 설치하고 구성하는 방법을 단계별로 안내합니다.</p>
+                <p>Step-by-step guide to install and configure SessionCast.</p>
             </header>
 
             <section id="overview" class="docs-section">
                 <h2>Overview</h2>
-                <p>SessionCast는 세 가지 주요 컴포넌트로 구성됩니다:</p>
+                <p>SessionCast consists of three main components:</p>
 
                 <div class="component-cards">
                     <div class="component-card">
@@ -70,7 +73,7 @@
                             </svg>
                         </div>
                         <h3>Relay Server</h3>
-                        <p>Agent와 Web Client 사이의 WebSocket 통신을 중계하고 인증을 관리합니다.</p>
+                        <p>Relays WebSocket communication between Agent and Web Client, managing authentication.</p>
                     </div>
 
                     <div class="component-card">
@@ -82,7 +85,7 @@
                             </svg>
                         </div>
                         <h3>Web Client</h3>
-                        <p>브라우저에서 터미널 세션을 보고 상호작용할 수 있는 React 기반 웹 애플리케이션입니다.</p>
+                        <p>React-based web application for viewing and interacting with terminal sessions in the browser.</p>
                     </div>
 
                     <div class="component-card">
@@ -95,7 +98,7 @@
                             </svg>
                         </div>
                         <h3>Agent</h3>
-                        <p>로컬 머신에서 실행되어 tmux 세션을 캡처하고 Relay Server로 스트리밍합니다.</p>
+                        <p>Runs on your local machine to capture tmux sessions and stream them to the Relay Server.</p>
                     </div>
                 </div>
             </section>
@@ -105,24 +108,24 @@
 
                 <h3>Relay Server & Web Client</h3>
                 <ul class="prereq-list">
-                    <li>Java 17 이상 (Relay Server)</li>
-                    <li>Node.js 18 이상 (Web Client 빌드 시)</li>
-                    <li>Docker (선택적)</li>
-                    <li>Google Cloud Console에서 OAuth 2.0 클라이언트 ID</li>
+                    <li>Java 17 or higher (Relay Server)</li>
+                    <li>Node.js 18 or higher (for Web Client build)</li>
+                    <li>Docker (optional)</li>
+                    <li>OAuth 2.0 Client ID from Google Cloud Console</li>
                 </ul>
 
                 <h3>Agent</h3>
                 <ul class="prereq-list">
-                    <li>Java 17 이상</li>
-                    <li>tmux 설치됨</li>
-                    <li>Linux 또는 macOS</li>
+                    <li>Java 17 or higher</li>
+                    <li>tmux installed</li>
+                    <li>Linux or macOS</li>
                 </ul>
             </section>
 
             <section id="relay-server" class="docs-section">
-                <h2>Relay Server 설치</h2>
+                <h2>Relay Server Installation</h2>
 
-                <h3>Option 1: Docker (권장)</h3>
+                <h3>Option 1: Docker (Recommended)</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>Docker</span>
@@ -202,20 +205,20 @@ sudo systemctl status sessioncast</code></pre>
                 </div>
 
                 <div class="info-box">
-                    <h4>Google OAuth 설정</h4>
+                    <h4>Google OAuth Setup</h4>
                     <ol>
-                        <li><a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>에서 프로젝트 생성</li>
-                        <li>OAuth 2.0 클라이언트 ID 생성 (웹 애플리케이션 유형)</li>
-                        <li>승인된 리디렉션 URI 추가: <code>https://your-domain.com/login/oauth2/code/google</code></li>
-                        <li>Client ID와 Client Secret을 환경 변수에 설정</li>
+                        <li>Create a project in <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
+                        <li>Create OAuth 2.0 Client ID (Web application type)</li>
+                        <li>Add authorized redirect URI: <code>https://your-domain.com/login/oauth2/code/google</code></li>
+                        <li>Set Client ID and Client Secret as environment variables</li>
                     </ol>
                 </div>
             </section>
 
             <section id="web-client" class="docs-section">
-                <h2>Web Client 설치</h2>
+                <h2>Web Client Installation</h2>
 
-                <p>Web Client는 Relay Server와 함께 배포하거나 별도의 정적 호스팅으로 배포할 수 있습니다.</p>
+                <p>Web Client can be deployed together with the Relay Server or on separate static hosting.</p>
 
                 <h3>Build from Source</h3>
                 <div class="code-block-wrapper">
@@ -284,7 +287,7 @@ npm run build
             </section>
 
             <section id="agent" class="docs-section">
-                <h2>Agent 설치</h2>
+                <h2>Agent Installation</h2>
 
                 <h3>Build from Source</h3>
                 <div class="code-block-wrapper">
@@ -303,8 +306,8 @@ cd agent
 cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
                 </div>
 
-                <h3>Agent Token 생성</h3>
-                <p>Agent가 Relay Server에 연결하려면 토큰이 필요합니다. Relay Server의 <code>agent-tokens.json</code>에 토큰을 추가하세요:</p>
+                <h3>Generate Agent Token</h3>
+                <p>The Agent needs a token to connect to the Relay Server. Add a token to the Relay Server's <code>agent-tokens.json</code>:</p>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
@@ -323,12 +326,12 @@ cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
                 </div>
 
                 <div class="warning-box">
-                    <h4>보안 주의</h4>
-                    <p>Agent Token은 민감한 정보입니다. 안전한 채널을 통해서만 공유하고, 절대 공개 저장소에 커밋하지 마세요.</p>
+                    <h4>Security Warning</h4>
+                    <p>Agent Token is sensitive information. Only share through secure channels and never commit to public repositories.</p>
                 </div>
 
-                <h3>Agent 설정</h3>
-                <p>홈 디렉토리에 <code>.tmux-remote.yml</code> 파일을 생성하세요:</p>
+                <h3>Agent Configuration</h3>
+                <p>Create a <code>.tmux-remote.yml</code> file in your home directory:</p>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
@@ -357,7 +360,7 @@ autoDiscovery: true
 #     label: "Work Projects"</code></pre>
                 </div>
 
-                <h3>Agent 실행</h3>
+                <h3>Running the Agent</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>Bash</span>
@@ -443,7 +446,7 @@ launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
                             </tr>
                             <tr>
                                 <td><code>JWT_SECRET</code></td>
-                                <td>JWT 서명 키 (최소 256 bits)</td>
+                                <td>JWT signing key (minimum 256 bits)</td>
                                 <td>Required</td>
                             </tr>
                             <tr>
@@ -453,13 +456,13 @@ launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
                             </tr>
                             <tr>
                                 <td><code>CORS_ORIGINS</code></td>
-                                <td>허용된 CORS origins (쉼표 구분)</td>
+                                <td>Allowed CORS origins (comma-separated)</td>
                                 <td>http://localhost:3000</td>
                             </tr>
                             <tr>
                                 <td><code>ALLOWED_DOMAINS</code></td>
-                                <td>허용된 이메일 도메인 (쉼표 구분)</td>
-                                <td>모든 도메인 허용</td>
+                                <td>Allowed email domains (comma-separated)</td>
+                                <td>All domains allowed</td>
                             </tr>
                         </tbody>
                     </table>
@@ -478,7 +481,7 @@ launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
                         <tbody>
                             <tr>
                                 <td><code>machineId</code></td>
-                                <td>고유한 머신 식별자</td>
+                                <td>Unique machine identifier</td>
                                 <td>Yes</td>
                             </tr>
                             <tr>
@@ -488,17 +491,17 @@ launchctl unload ~/Library/LaunchAgents/com.sessioncast.agent.plist</code></pre>
                             </tr>
                             <tr>
                                 <td><code>token</code></td>
-                                <td>Agent 인증 토큰</td>
+                                <td>Agent authentication token</td>
                                 <td>Yes</td>
                             </tr>
                             <tr>
                                 <td><code>autoDiscovery</code></td>
-                                <td>tmux 세션 자동 감지</td>
+                                <td>Auto-detect tmux sessions</td>
                                 <td>No (default: false)</td>
                             </tr>
                             <tr>
                                 <td><code>sessions</code></td>
-                                <td>수동 세션 설정 목록</td>
+                                <td>Manual session configuration list</td>
                                 <td>No</td>
                             </tr>
                         </tbody>

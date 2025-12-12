@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usage Guide - SessionCast</title>
+    <title>사용 가이드 - SessionCast</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,7 +23,10 @@
                 <li><a href="install.html">설치 가이드</a></li>
                 <li><a href="guide.html" class="active">사용 가이드</a></li>
                 <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
-                <li class="lang-switch"><a href="../guide.html" title="English">🇺🇸 EN</a></li>
+                <li class="lang-switch">
+                    <a href="../guide.html">EN</a>
+                    <a href="guide.html" class="active">KO</a>
+                </li>
             </ul>
             <button class="nav-toggle" aria-label="Toggle menu">
                 <span></span>
@@ -37,26 +40,26 @@
     <main class="docs-main">
         <aside class="docs-sidebar">
             <nav class="docs-nav">
-                <h3>Usage Guide</h3>
+                <h3>사용 가이드</h3>
                 <ul>
-                    <li><a href="#getting-started">Getting Started</a></li>
-                    <li><a href="#tmux-sessions">tmux Sessions</a></li>
-                    <li><a href="#web-interface">Web Interface</a></li>
-                    <li><a href="#keyboard-input">Keyboard Input</a></li>
-                    <li><a href="#session-management">Session Management</a></li>
-                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    <li><a href="#getting-started">시작하기</a></li>
+                    <li><a href="#tmux-sessions">tmux 세션</a></li>
+                    <li><a href="#web-interface">웹 인터페이스</a></li>
+                    <li><a href="#keyboard-input">키보드 입력</a></li>
+                    <li><a href="#session-management">세션 관리</a></li>
+                    <li><a href="#troubleshooting">문제 해결</a></li>
                 </ul>
             </nav>
         </aside>
 
         <article class="docs-content">
             <header class="docs-header">
-                <h1>Usage Guide</h1>
+                <h1>사용 가이드</h1>
                 <p>SessionCast를 효과적으로 사용하는 방법을 알아봅니다.</p>
             </header>
 
             <section id="getting-started" class="docs-section">
-                <h2>Getting Started</h2>
+                <h2>시작하기</h2>
 
                 <h3>기본 워크플로우</h3>
                 <div class="workflow-steps">
@@ -105,7 +108,7 @@ tail -f ~/sessioncast-agent.log
             </section>
 
             <section id="tmux-sessions" class="docs-section">
-                <h2>tmux Sessions</h2>
+                <h2>tmux 세션</h2>
 
                 <h3>세션 생성</h3>
                 <div class="code-block-wrapper">
@@ -150,7 +153,7 @@ autoDiscovery: true</code></pre>
             </section>
 
             <section id="web-interface" class="docs-section">
-                <h2>Web Interface</h2>
+                <h2>웹 인터페이스</h2>
 
                 <h3>로그인</h3>
                 <p>SessionCast는 Google OAuth 2.0을 사용합니다:</p>
@@ -183,7 +186,7 @@ autoDiscovery: true</code></pre>
             </section>
 
             <section id="keyboard-input" class="docs-section">
-                <h2>Keyboard Input</h2>
+                <h2>키보드 입력</h2>
 
                 <h3>기본 입력</h3>
                 <p>터미널 영역을 클릭한 후 키보드 입력이 가능합니다:</p>
@@ -198,8 +201,8 @@ autoDiscovery: true</code></pre>
                     <table>
                         <thead>
                             <tr>
-                                <th>Key</th>
-                                <th>Function</th>
+                                <th>키</th>
+                                <th>기능</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -237,8 +240,8 @@ autoDiscovery: true</code></pre>
                     <table>
                         <thead>
                             <tr>
-                                <th>Key Sequence</th>
-                                <th>Function</th>
+                                <th>키 조합</th>
+                                <th>기능</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -277,7 +280,7 @@ autoDiscovery: true</code></pre>
             </section>
 
             <section id="session-management" class="docs-section">
-                <h2>Session Management</h2>
+                <h2>세션 관리</h2>
 
                 <h3>웹에서 세션 생성</h3>
                 <p>Web UI에서 새로운 tmux 세션을 생성할 수 있습니다:</p>
@@ -306,7 +309,7 @@ autoDiscovery: true</code></pre>
             </section>
 
             <section id="troubleshooting" class="docs-section">
-                <h2>Troubleshooting</h2>
+                <h2>문제 해결</h2>
 
                 <h3>세션이 목록에 표시되지 않음</h3>
                 <div class="troubleshoot-item">
@@ -367,7 +370,7 @@ autoDiscovery: true</code></pre>
                     </ol>
                 </div>
 
-                <h3>Agent 재시작</h3>
+                <h3>에이전트 재시작</h3>
                 <div class="code-block-wrapper">
                     <div class="code-header">
                         <span>macOS (launchd)</span>
@@ -398,7 +401,7 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
             <nav class="docs-pagination">
                 <a href="install.html" class="prev-link">
                     <span class="arrow">←</span>
-                    <span>Installation</span>
+                    <span>설치 가이드</span>
                 </a>
                 <a href="https://github.com/sessioncast" target="_blank" class="next-link">
                     <span>GitHub</span>
