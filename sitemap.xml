@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- English Pages -->
+  <url>
+    <loc>https://sessioncast.io/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sessioncast.io/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sessioncast.io/ko/"/>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://sessioncast.io/install.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sessioncast.io/install.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sessioncast.io/ko/install.html"/>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://sessioncast.io/guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sessioncast.io/guide.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sessioncast.io/ko/guide.html"/>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Korean Pages -->
+  <url>
+    <loc>https://sessioncast.io/ko/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sessioncast.io/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sessioncast.io/ko/"/>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://sessioncast.io/ko/install.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sessioncast.io/install.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sessioncast.io/ko/install.html"/>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://sessioncast.io/ko/guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sessioncast.io/guide.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sessioncast.io/ko/guide.html"/>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

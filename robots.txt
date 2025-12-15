@@ -1,0 +1,10 @@
+# robots.txt for sessioncast.io
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://sessioncast.io/sitemap.xml
+
+# Crawl-delay (optional, for politeness)
+Crawl-delay: 1
