@@ -20,6 +20,7 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="/#features">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
                 <li><a href="install.html" class="active">Installation</a></li>
                 <li><a href="guide.html">Usage Guide</a></li>
                 <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
@@ -144,7 +145,7 @@
                         <button class="deploy-tab-btn" data-tab="saas">
                             <span class="tab-icon">✨</span>
                             <span>SaaS</span>
-                            <span class="tab-badge coming-soon">Coming Soon</span>
+                            <span class="tab-badge">Beta</span>
                         </button>
                     </div>
 
@@ -372,31 +373,88 @@ aws acm request-certificate \
                         </div>
                     </div>
 
-                    <!-- SaaS Coming Soon -->
+                    <!-- SaaS Beta -->
                     <div class="deploy-tab-content" id="tab-saas">
-                        <div class="coming-soon-box">
-                            <div class="icon">🚀</div>
-                            <h3>SessionCast Cloud Coming Soon</h3>
-                            <p>We're building a fully managed SaaS version. No server setup needed - just install the agent and start streaming.</p>
+                        <div class="info-box">
+                            <h4>🚀 SessionCast Cloud (Beta)</h4>
+                            <p>The easiest way to get started! No server setup required - just sign up, install the agent, and start streaming your terminal sessions.</p>
+                        </div>
 
-                            <div class="coming-soon-features">
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>No server management</span>
-                                </div>
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>Instant setup</span>
-                                </div>
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>Auto-scaling</span>
-                                </div>
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>Team management</span>
-                                </div>
+                        <h3>Step 1: Create Your Account</h3>
+                        <p>Sign up with your Google account at <a href="https://app.sessioncast.io" target="_blank">app.sessioncast.io</a></p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Sign Up</span>
                             </div>
+                            <pre class="code-block"><code>→ Visit: https://app.sessioncast.io
+→ Click "Sign in with Google"
+→ Grant permissions to access your account</code></pre>
+                        </div>
+
+                        <h3>Step 2: Generate Agent Token</h3>
+                        <p>Create an API token to connect your local machine to SessionCast Cloud.</p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Create Token</span>
+                            </div>
+                            <pre class="code-block"><code>→ Go to Account → API Tokens
+→ Click "Create New Token"
+→ Copy the generated token (it will only be shown once!)</code></pre>
+                        </div>
+
+                        <h3>Step 3: Install Agent</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Bash</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Clone repository
+git clone https://github.com/sessioncast/agent.git
+cd agent
+
+# Build
+./gradlew build -x test
+
+# Copy jar to desired location
+cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                        </div>
+
+                        <h3>Step 4: Configure Agent</h3>
+                        <p>Create <code>~/.tmux-remote.yml</code> with your token:</p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>~/.tmux-remote.yml</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Machine identifier (unique per machine)
+machineId: my-workstation
+
+# SessionCast Cloud relay server
+relay: wss://relay.sessioncast.io/ws
+
+# Your API token from account.sessioncast.io
+token: YOUR_API_TOKEN_HERE
+
+# Auto-discovery: automatically detect tmux sessions
+autoDiscovery: true</code></pre>
+                        </div>
+
+                        <h3>Step 5: Run Agent & Connect</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Bash</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># Run agent
+java -jar ~/sessioncast-agent.jar
+
+# Open your browser and go to:
+# https://app.sessioncast.io</code></pre>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>✨ Free Plan Included</h4>
+                            <p>Start with the Free plan - includes 1 agent connection and basic features. <a href="https://account.sessioncast.io/billing" target="_blank">Upgrade anytime</a> for more agents and advanced features.</p>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - SessionCast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .pricing-hero {
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        .pricing-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pricing-hero p {
+            font-size: 1.25rem;
+            color: #9ca3af;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+        .pricing-card {
+            background: #1f2937;
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            border: 1px solid #374151;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: #4b5563;
+        }
+        .pricing-card.featured {
+            border-color: #6366f1;
+            background: linear-gradient(180deg, #1e1b4b 0%, #1f2937 100%);
+            transform: scale(1.05);
+            z-index: 1;
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+            border-color: #818cf8;
+        }
+        .pricing-card.featured::before {
+            content: 'Popular';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+        .plan-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e5e7eb;
+        }
+        .plan-price {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 16px 0;
+            color: #fff;
+            line-height: 1;
+        }
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #6b7280;
+        }
+        .plan-description {
+            color: #9ca3af;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            min-height: 48px;
+        }
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px;
+            flex-grow: 1;
+        }
+        .plan-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(75, 85, 99, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        .plan-features .check {
+            color: #10b981;
+            font-size: 1.1rem;
+        }
+        .plan-features .limit {
+            color: #a5b4fc;
+            font-size: 0.875rem;
+            margin-left: auto;
+            font-weight: 600;
+        }
+        .plan-cta {
+            display: block;
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        .plan-cta.primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        }
+        .plan-cta.primary:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+        }
+        .plan-cta.secondary {
+            background: #374151;
+            color: white;
+            border: 1px solid #4b5563;
+        }
+        .plan-cta.secondary:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+        }
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        .faq-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+        .faq-item {
+            background: #1f2937;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            padding: 24px;
+            border: 1px solid #374151;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: #4b5563;
+        }
+        .faq-item h3 {
+            font-size: 1.125rem;
+            margin-bottom: 12px;
+            color: #f3f4f6;
+        }
+        .faq-item p {
+            color: #9ca3af;
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">></span>
+                <span class="logo-text">SessionCast</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="pricing.html" class="active">Pricing</a></li>
+                <li><a href="install.html">Installation</a></li>
+                <li><a href="guide.html">Usage Guide</a></li>
+                <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
+                <li class="lang-switch">
+                    <a href="pricing.html" class="active">EN</a>
+                    <a href="ko/pricing.html">KO</a>
+                </li>
+                <li class="nav-console">
+                    <a href="https://app.sessioncast.io" class="btn-console">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <path d="M8 21h8"/>
+                            <path d="M12 17v4"/>
+                            <path d="M7 8l3 3-3 3"/>
+                            <path d="M13 14h4"/>
+                        </svg>
+                        Console
+                    </a>
+                </li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Pricing Hero -->
+    <section class="pricing-hero">
+        <div class="container">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Choose the plan that fits your needs. Start free and upgrade as you grow.</p>
+        </div>
+    </section>
+
+    <!-- Pricing Grid -->
+    <section class="pricing-container">
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+            <div class="plan-name">Free</div>
+            <div class="plan-price">$0<span>/month</span></div>
+            <p class="plan-description">Perfect for personal use and trying out SessionCast.</p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Active Sessions <span class="limit">1</span></li>
+                <li><span class="check">✓</span> Agents <span class="limit">1</span></li>
+                <li><span class="check">✓</span> Web Access</li>
+            </ul>
+            <a href="https://app.sessioncast.io" class="plan-cta secondary">Get Started Free</a>
+        </div>
+
+        <!-- Basic Plan -->
+        <div class="pricing-card featured">
+            <div class="plan-name">Basic</div>
+            <div class="plan-price">$5<span>/month</span></div>
+            <p class="plan-description">For developers who need more sessions and flexibility.</p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Active Sessions <span class="limit">5</span></li>
+                <li><span class="check">✓</span> Agents <span class="limit">3</span></li>
+                <li><span class="check">✓</span> Ad-free</li>
+            </ul>
+            <a href="https://app.sessioncast.io" class="plan-cta primary">Start Basic Plan</a>
+        </div>
+
+        <!-- Plus Plan -->
+        <div class="pricing-card">
+            <div class="plan-name">Plus</div>
+            <div class="plan-price">$15<span>/month</span></div>
+            <p class="plan-description">For power users who need unlimited access and premium features.</p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Active Sessions <span class="limit">Unlimited</span></li>
+                <li><span class="check">✓</span> Agents <span class="limit">10</span></li>
+                <li><span class="check">✓</span> Ad-free</li>
+                <li><span class="check">✓</span> REST API</li>
+            </ul>
+            <a href="https://app.sessioncast.io" class="plan-cta secondary">Start Plus Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <h3>Can I change my plan later?</h3>
+            <p>Yes! You can upgrade or downgrade your plan at any time from your account settings.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What payment methods do you accept?</h3>
+            <p>We accept all major credit cards (Visa, MasterCard, American Express) through Stripe.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is there a free trial for paid plans?</h3>
+            <p>The Free plan lets you try all core features. You can upgrade to a paid plan when you need more sessions or agents.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What happens if I exceed my limits?</h3>
+            <p>You won't be able to create new sessions or agents beyond your plan limits. Upgrade your plan to get more capacity.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 SessionCast. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

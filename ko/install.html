@@ -20,6 +20,7 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="/ko/#features">기능</a></li>
+                <li><a href="pricing.html">가격</a></li>
                 <li><a href="install.html" class="active">설치 가이드</a></li>
                 <li><a href="guide.html">사용 가이드</a></li>
                 <li><a href="https://github.com/sessioncast" target="_blank" class="nav-github">GitHub</a></li>
@@ -144,7 +145,7 @@
                         <button class="deploy-tab-btn" data-tab="saas">
                             <span class="tab-icon">✨</span>
                             <span>SaaS</span>
-                            <span class="tab-badge coming-soon">준비중</span>
+                            <span class="tab-badge">베타</span>
                         </button>
                     </div>
 
@@ -372,31 +373,88 @@ aws acm request-certificate \
                         </div>
                     </div>
 
-                    <!-- SaaS Coming Soon -->
+                    <!-- SaaS Beta -->
                     <div class="deploy-tab-content" id="tab-saas">
-                        <div class="coming-soon-box">
-                            <div class="icon">🚀</div>
-                            <h3>SessionCast Cloud 준비중</h3>
-                            <p>완전 관리형 SaaS 버전을 개발 중입니다. 서버 설정 없이 에이전트만 설치하면 바로 스트리밍을 시작할 수 있습니다.</p>
+                        <div class="info-box">
+                            <h4>🚀 SessionCast Cloud (베타)</h4>
+                            <p>가장 쉬운 시작 방법! 서버 설정 없이 가입하고 에이전트만 설치하면 터미널 세션 스트리밍을 바로 시작할 수 있습니다.</p>
+                        </div>
 
-                            <div class="coming-soon-features">
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>서버 관리 불필요</span>
-                                </div>
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>즉시 설정</span>
-                                </div>
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>오토 스케일링</span>
-                                </div>
-                                <div class="feature">
-                                    <span class="check">✓</span>
-                                    <span>팀 관리</span>
-                                </div>
+                        <h3>1단계: 계정 생성</h3>
+                        <p>Google 계정으로 <a href="https://app.sessioncast.io" target="_blank">app.sessioncast.io</a>에서 가입하세요.</p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>가입하기</span>
                             </div>
+                            <pre class="code-block"><code>→ 방문: https://app.sessioncast.io
+→ "Sign in with Google" 클릭
+→ 권한 허용</code></pre>
+                        </div>
+
+                        <h3>2단계: Agent 토큰 생성</h3>
+                        <p>로컬 머신을 SessionCast Cloud에 연결하기 위한 API 토큰을 생성하세요.</p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>토큰 생성</span>
+                            </div>
+                            <pre class="code-block"><code>→ 계정 → API 토큰으로 이동
+→ "새 토큰 생성" 클릭
+→ 생성된 토큰 복사 (한 번만 표시됩니다!)</code></pre>
+                        </div>
+
+                        <h3>3단계: Agent 설치</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Bash</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># 저장소 클론
+git clone https://github.com/sessioncast/agent.git
+cd agent
+
+# 빌드
+./gradlew build -x test
+
+# jar 파일을 원하는 위치에 복사
+cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                        </div>
+
+                        <h3>4단계: Agent 설정</h3>
+                        <p>토큰을 사용하여 <code>~/.tmux-remote.yml</code> 파일을 생성하세요:</p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>~/.tmux-remote.yml</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># 머신 식별자 (머신당 고유)
+machineId: my-workstation
+
+# SessionCast Cloud 릴레이 서버
+relay: wss://relay.sessioncast.io/ws
+
+# account.sessioncast.io에서 발급받은 API 토큰
+token: YOUR_API_TOKEN_HERE
+
+# 자동 감지: tmux 세션 자동 감지
+autoDiscovery: true</code></pre>
+                        </div>
+
+                        <h3>5단계: Agent 실행 & 연결</h3>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>Bash</span>
+                                <button class="copy-btn" data-clipboard>Copy</button>
+                            </div>
+                            <pre class="code-block"><code># 에이전트 실행
+java -jar ~/sessioncast-agent.jar
+
+# 브라우저에서 접속:
+# https://app.sessioncast.io</code></pre>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>✨ Free 플랜 포함</h4>
+                            <p>Free 플랜으로 시작하세요 - 1개 에이전트 연결과 기본 기능이 포함됩니다. 더 많은 에이전트와 고급 기능을 위해 <a href="https://account.sessioncast.io/billing" target="_blank">언제든지 업그레이드</a>하세요.</p>
                         </div>
                     </div>
                 </div>
