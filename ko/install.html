@@ -417,22 +417,15 @@ aws acm request-certificate \
                                 <span>Bash</span>
                                 <button class="copy-btn" data-clipboard>Copy</button>
                             </div>
-                            <pre class="code-block"><code># 저장소 클론
-git clone https://github.com/sessioncast/agent.git
-cd agent
-
-# 빌드
-./gradlew build -x test
-
-# jar 파일을 원하는 위치에 복사
-cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                            <pre class="code-block"><code># SessionCast CLI를 전역으로 설치
+npm install -g sessioncast-cli</code></pre>
                         </div>
 
                         <h3>4단계: Agent 설정</h3>
-                        <p>토큰을 사용하여 <code>~/.tmux-remote.yml</code> 파일을 생성하세요:</p>
+                        <p>토큰을 사용하여 <code>~/.sessioncast.yml</code> 파일을 생성하세요:</p>
                         <div class="code-block-wrapper">
                             <div class="code-header">
-                                <span>~/.tmux-remote.yml</span>
+                                <span>~/.sessioncast.yml</span>
                                 <button class="copy-btn" data-clipboard>Copy</button>
                             </div>
                             <pre class="code-block"><code># 머신 식별자 (머신당 고유)
@@ -441,11 +434,8 @@ machineId: my-workstation
 # SessionCast Cloud 릴레이 서버
 relay: wss://relay.sessioncast.io/ws
 
-# account.sessioncast.io에서 발급받은 API 토큰
-token: YOUR_API_TOKEN_HERE
-
-# 자동 감지: tmux 세션 자동 감지
-autoDiscovery: true</code></pre>
+# app.sessioncast.io에서 발급받은 API 토큰
+token: YOUR_API_TOKEN_HERE</code></pre>
                         </div>
 
                         <h3>5단계: Agent 실행 & 연결</h3>
@@ -455,7 +445,7 @@ autoDiscovery: true</code></pre>
                                 <button class="copy-btn" data-clipboard>Copy</button>
                             </div>
                             <pre class="code-block"><code># 에이전트 실행
-java -jar ~/sessioncast-agent.jar
+sessioncast agent
 
 # 브라우저에서 접속:
 # https://app.sessioncast.io</code></pre>
@@ -475,7 +465,7 @@ java -jar ~/sessioncast-agent.jar
 
                 <h3>사전 요구사항</h3>
                 <ul class="prereq-list">
-                    <li>Java 17 이상</li>
+                    <li>Node.js 18 이상</li>
                     <li>tmux 설치됨</li>
                     <li>Linux 또는 macOS</li>
                 </ul>
@@ -486,15 +476,8 @@ java -jar ~/sessioncast-agent.jar
                         <span>Bash</span>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
-                    <pre class="code-block"><code># 저장소 클론
-git clone https://github.com/sessioncast/agent.git
-cd agent
-
-# 빌드
-./gradlew build -x test
-
-# jar 파일을 원하는 위치에 복사
-cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                    <pre class="code-block"><code># SessionCast CLI를 전역으로 설치
+npm install -g sessioncast-cli</code></pre>
                 </div>
 
                 <h3>에이전트 토큰 생성</h3>
@@ -522,11 +505,11 @@ cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
                 </div>
 
                 <h3>에이전트 설정</h3>
-                <p><code>~/.tmux-remote.yml</code> 파일을 생성하세요:</p>
+                <p><code>~/.sessioncast.yml</code> 파일을 생성하세요:</p>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
-                        <span>~/.tmux-remote.yml</span>
+                        <span>~/.sessioncast.yml</span>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
                     <pre class="code-block"><code># 머신 식별자 (머신당 고유)
@@ -536,10 +519,7 @@ machineId: my-workstation
 relay: wss://your-server.com/ws   # 로컬의 경우 ws://localhost:8080/ws
 
 # 에이전트 인증 토큰
-token: agt_your_secure_token_here
-
-# 자동 감지: tmux 세션 자동 감지
-autoDiscovery: true</code></pre>
+token: agt_your_secure_token_here</code></pre>
                 </div>
 
                 <h3>에이전트 실행</h3>
@@ -549,10 +529,10 @@ autoDiscovery: true</code></pre>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
                     <pre class="code-block"><code># 직접 실행
-java -jar ~/sessioncast-agent.jar
+sessioncast agent
 
 # 또는 백그라운드에서 실행
-nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code></pre>
+nohup sessioncast agent > ~/sessioncast-agent.log 2>&1 &</code></pre>
                 </div>
 
                 <h3>macOS 자동 시작 (launchd)</h3>
@@ -570,14 +550,18 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
     &lt;string&gt;com.sessioncast.agent&lt;/string&gt;
     &lt;key&gt;ProgramArguments&lt;/key&gt;
     &lt;array&gt;
-        &lt;string&gt;/usr/bin/java&lt;/string&gt;
-        &lt;string&gt;-jar&lt;/string&gt;
-        &lt;string&gt;/Users/YOUR_USERNAME/sessioncast-agent.jar&lt;/string&gt;
+        &lt;string&gt;/usr/local/bin/sessioncast&lt;/string&gt;
+        &lt;string&gt;agent&lt;/string&gt;
     &lt;/array&gt;
     &lt;key&gt;RunAtLoad&lt;/key&gt;
     &lt;true/&gt;
     &lt;key&gt;KeepAlive&lt;/key&gt;
     &lt;true/&gt;
+    &lt;key&gt;EnvironmentVariables&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;PATH&lt;/key&gt;
+        &lt;string&gt;/usr/local/bin:/usr/bin:/bin&lt;/string&gt;
+    &lt;/dict&gt;
 &lt;/dict&gt;
 &lt;/plist&gt;</code></pre>
                 </div>

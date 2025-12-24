@@ -417,22 +417,15 @@ aws acm request-certificate \
                                 <span>Bash</span>
                                 <button class="copy-btn" data-clipboard>Copy</button>
                             </div>
-                            <pre class="code-block"><code># Clone repository
-git clone https://github.com/sessioncast/agent.git
-cd agent
-
-# Build
-./gradlew build -x test
-
-# Copy jar to desired location
-cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                            <pre class="code-block"><code># Install SessionCast CLI globally
+npm install -g sessioncast-cli</code></pre>
                         </div>
 
                         <h3>Step 4: Configure Agent</h3>
-                        <p>Create <code>~/.tmux-remote.yml</code> with your token:</p>
+                        <p>Create <code>~/.sessioncast.yml</code> with your token:</p>
                         <div class="code-block-wrapper">
                             <div class="code-header">
-                                <span>~/.tmux-remote.yml</span>
+                                <span>~/.sessioncast.yml</span>
                                 <button class="copy-btn" data-clipboard>Copy</button>
                             </div>
                             <pre class="code-block"><code># Machine identifier (unique per machine)
@@ -441,11 +434,8 @@ machineId: my-workstation
 # SessionCast Cloud relay server
 relay: wss://relay.sessioncast.io/ws
 
-# Your API token from account.sessioncast.io
-token: YOUR_API_TOKEN_HERE
-
-# Auto-discovery: automatically detect tmux sessions
-autoDiscovery: true</code></pre>
+# Your API token from app.sessioncast.io
+token: YOUR_API_TOKEN_HERE</code></pre>
                         </div>
 
                         <h3>Step 5: Run Agent & Connect</h3>
@@ -455,7 +445,7 @@ autoDiscovery: true</code></pre>
                                 <button class="copy-btn" data-clipboard>Copy</button>
                             </div>
                             <pre class="code-block"><code># Run agent
-java -jar ~/sessioncast-agent.jar
+sessioncast agent
 
 # Open your browser and go to:
 # https://app.sessioncast.io</code></pre>
@@ -475,7 +465,7 @@ java -jar ~/sessioncast-agent.jar
 
                 <h3>Prerequisites</h3>
                 <ul class="prereq-list">
-                    <li>Java 17 or higher</li>
+                    <li>Node.js 18 or higher</li>
                     <li>tmux installed</li>
                     <li>Linux or macOS</li>
                 </ul>
@@ -486,15 +476,8 @@ java -jar ~/sessioncast-agent.jar
                         <span>Bash</span>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
-                    <pre class="code-block"><code># Clone repository
-git clone https://github.com/sessioncast/agent.git
-cd agent
-
-# Build
-./gradlew build -x test
-
-# Copy jar to desired location
-cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
+                    <pre class="code-block"><code># Install SessionCast CLI globally
+npm install -g sessioncast-cli</code></pre>
                 </div>
 
                 <h3>Generate Agent Token</h3>
@@ -522,11 +505,11 @@ cp build/libs/agent-0.0.1-SNAPSHOT.jar ~/sessioncast-agent.jar</code></pre>
                 </div>
 
                 <h3>Configure Agent</h3>
-                <p>Create <code>~/.tmux-remote.yml</code>:</p>
+                <p>Create <code>~/.sessioncast.yml</code>:</p>
 
                 <div class="code-block-wrapper">
                     <div class="code-header">
-                        <span>~/.tmux-remote.yml</span>
+                        <span>~/.sessioncast.yml</span>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
                     <pre class="code-block"><code># Machine identifier (unique per machine)
@@ -536,10 +519,7 @@ machineId: my-workstation
 relay: wss://your-server.com/ws   # or ws://localhost:8080/ws for local
 
 # Agent token for authentication
-token: agt_your_secure_token_here
-
-# Auto-discovery: automatically detect tmux sessions
-autoDiscovery: true</code></pre>
+token: agt_your_secure_token_here</code></pre>
                 </div>
 
                 <h3>Run Agent</h3>
@@ -549,10 +529,10 @@ autoDiscovery: true</code></pre>
                         <button class="copy-btn" data-clipboard>Copy</button>
                     </div>
                     <pre class="code-block"><code># Run directly
-java -jar ~/sessioncast-agent.jar
+sessioncast agent
 
 # Or run in background
-nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code></pre>
+nohup sessioncast agent > ~/sessioncast-agent.log 2>&1 &</code></pre>
                 </div>
 
                 <h3>Auto-start on macOS (launchd)</h3>
@@ -570,14 +550,18 @@ nohup java -jar ~/sessioncast-agent.jar > ~/sessioncast-agent.log 2>&1 &</code><
     &lt;string&gt;com.sessioncast.agent&lt;/string&gt;
     &lt;key&gt;ProgramArguments&lt;/key&gt;
     &lt;array&gt;
-        &lt;string&gt;/usr/bin/java&lt;/string&gt;
-        &lt;string&gt;-jar&lt;/string&gt;
-        &lt;string&gt;/Users/YOUR_USERNAME/sessioncast-agent.jar&lt;/string&gt;
+        &lt;string&gt;/usr/local/bin/sessioncast&lt;/string&gt;
+        &lt;string&gt;agent&lt;/string&gt;
     &lt;/array&gt;
     &lt;key&gt;RunAtLoad&lt;/key&gt;
     &lt;true/&gt;
     &lt;key&gt;KeepAlive&lt;/key&gt;
     &lt;true/&gt;
+    &lt;key&gt;EnvironmentVariables&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;PATH&lt;/key&gt;
+        &lt;string&gt;/usr/local/bin:/usr/bin:/bin&lt;/string&gt;
+    &lt;/dict&gt;
 &lt;/dict&gt;
 &lt;/plist&gt;</code></pre>
                 </div>
